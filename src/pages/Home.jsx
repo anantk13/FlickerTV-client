@@ -1,21 +1,63 @@
-// pages/HomePage.js
-import React from 'react';
-import VideoCard from '../components/VideoCard';
-import { useVideos } from '../hooks/useVideo';
+import React, { useEffect } from "react";
+import { useVideos } from "../hooks/video.hook";
+import { useInView } from "react-intersection-observer";
+import { Link } from "react-router-dom";
+import { Videocard, VideoCardSkeleton } from "../components/index.js";
 
-const HomePage = () => {
-    const { data: videos, isLoading, isError } = useVideos();
+function Home() {
+  const { data, fetchNextPage, isFetched, isFetching } = useVideos();
+  const { ref, inView } = useInView();
 
-    if (isLoading) return <div className="p-4">Loading...</div>;
-    if (isError) return <div className="p-4 text-red-500">Error loading videos</div>;
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  if (isFetching) {
     return (
-        <div className="flex flex-wrap">
-            {videos.map(video => (
-                <VideoCard key={video.id} video={video} />
-            ))}
-        </div>
+      <>
+        <section className="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
+          <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-4 p-4">
+            {Array(8)
+              .fill()
+              .map((_, index) => (
+                <VideoCardSkeleton key={index} />
+              ))}
+          </div>
+        </section>
+      </>
     );
-};
+  }
 
-export default HomePage;
+  return (
+    <>
+      <section className="w-full bg-[#0e0e0e] pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
+        <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-4 p-4">
+          {isFetched &&
+            data?.pages.map((page, index) => {
+              return (
+                <React.Fragment key={index}>
+                  {isFetched &&
+                    page.docs.map((video) => {
+                      return (
+                        <Link to={`/video/${video._id}`} key={video._id}>
+                          <Videocard video={video} />
+                        </Link>
+                      );
+                    })}
+                </React.Fragment>
+              );
+            })}
+          <div ref={ref}></div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+export default Home;

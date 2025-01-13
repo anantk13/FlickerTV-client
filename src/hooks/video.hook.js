@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  getAllVideos,
+  getVideos,
   getVideoById,
   uploadVideo,
   deleteVideo,
@@ -12,12 +12,12 @@ import {
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 export const useVideos = (options = {}) => {
-  const {userId, sortBy, sortType, query} = options;
+  const { userId, sortBy, sortType, query } = options;
 
   return useInfiniteQuery({
-    queryKey: ["videos", {userId, sortBy, sortType, query,}],
+    queryKey: ["videos", { userId, sortBy, sortType, query }],
     queryFn: async ({ pageParam = 1 }) => {
-      const response = await getAllVideos(pageParam, userId, sortBy, sortType, query);
+      const response = await getVideos(pageParam, userId, sortBy, sortType, query);
       console.log("API response:", response); // Log the response
       return response;
     },

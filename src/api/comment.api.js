@@ -1,62 +1,63 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-import { BASE_URL } from "../Constants";
+import { BASE_URL } from "../constants";
 
 const API = axios.create({
-    baseURL: BASE_URL,
-    withCredentials: true,
-  });
+  baseURL: BASE_URL,
+  withCredentials: true, // we use this to maintain CORS policy
+});
 
-  export const getVideoComments = async(
-    videoId = null,
-    authenticated = true,
-    page = null,
-    limit = null
-  ) => {
-    try{
+export const getAllComments = async (
+  videoId = null,
+  authenticated = true,
+  page = null,
+  limit = null
+) => {
+  try {
     const url = new URL(
-    `${BASE_URL}/comment/${videoId}${authenticated ? "" : "?guest=true"}`
+      `${BASE_URL}/comment/${videoId}${authenticated ? "" : "?guest=true"}`
     );
 
     if (page) url.searchParams.set("page", page);
     if (limit) url.searchParams.set("limit", limit);
-    const {data} = await API.get(url.href)
-    toast.success(data?.message);
-    return data?.data;
-    }catch (error) {
-    toast.error(error?.response?.data?.error);
-    throw error?.response?.data?.error;
-  }
-}
+    const { data } = await API.get(url.href);
 
-  export const addComment = async(videoId,comment) => {
-    try{
-    const {data} = await API.post(`/comments/${videoId}`,comment)
+    return data?.data;
+  } catch (error) {
+    toast.error(error?.response?.data?.error);
+    throw error?.response?.data?.error;
+  }
+};
+
+export const addComment = async (videoId, comment) => {
+  try {
+    const { data } = await API.post(`/comment/${videoId}`, comment);
     toast.success(data?.message);
     return data?.data;
   } catch (error) {
     toast.error(error?.response?.data?.error);
     throw error?.response?.data?.error;
   }
-}
-  export const deleteComment = async(commentId) => {
-    try{
-    const {data} = await API.delete(`/comments/c/${commentId}`)
+};
+
+export const updateComment = async (commentId, comment) => {
+  try {
+    const { data } = await API.patch(`/comment/c/${commentId}`, comment);
     toast.success(data?.message);
     return data?.data;
   } catch (error) {
     toast.error(error?.response?.data?.error);
     throw error?.response?.data?.error;
   }
-}
-  export const updateComment = async(commentId,comment) => {
-    try{
-    const {data} = await API.patch(`/comments/c/${commentId}`,comment)
+};
+
+export const deleteComment = async (commentId) => {
+  try {
+    const { data } = await API.delete(`/comment/c/${commentId}`);
     toast.success(data?.message);
-    return data?.data;
+    return data;
   } catch (error) {
     toast.error(error?.response?.data?.error);
     throw error?.response?.data?.error;
   }
-}
-  
+};

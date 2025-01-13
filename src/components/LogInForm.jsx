@@ -1,19 +1,71 @@
-import React from 'react'
+import React from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useLogin } from "../hooks/auth.hook";
+import { Input, SpButton } from "./index";
 
-function LogInForm({onLogin}) {
-
+function LoginForm({ onLogin }) {
   const schema = z.object({
-    username : z.string().regex(/^[a-zA-Z0-9_]+$/),
-    passowrd : z.string().min(8)
-  })
+    usernameOrEmail: z
+      .string()
+      .min(3, "Username or email must be at least 3 characters"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+  });
 
-  const 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
+
+  const { mutateAsync: login, isPending, isError, error } = useLogin();
+
+  const loginUser = async (data) => {
+    try {
+      const session = await login(data);
+      if (session) {
+        onLogin(session);
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
   return (
-    <div>LogInForm</div>
-  )
+    <form onSubmit={handleSubmit(loginUser)} className="flex flex-col text-[#FFFFFF]">
+      <Input className="text-white"
+        label={"Username/Email*"}
+        type="text"
+        placeholder="Username"
+        id={"username"}
+        {...register("usernameOrEmail", {
+          required: true,
+        })}
+      />
+      {errors.usernameOrEmail && (
+        <span className="text-red-500 text-sm">
+          {errors.usernameOrEmail.message}
+        </span>
+      )}
+      <Input
+        label={"Password*"}
+        type="password"
+        placeholder="Password"
+        id={"password"}
+        {...register("password", {
+          required: true,
+        })}
+        className="mb-4"
+      />
+      {errors.password && (
+        <span className="text-red-500 text-sm">{errors.password.message}</span>
+      )}
+      {/* {isError && <span className="text-red-500 text-sm">{error.message}</span>} */}
+      <SpButton type="submit">{isPending ? "Logging In" : "Login"}</SpButton>
+    </form>
+  );
 }
 
-export default LogInForm
+export default LoginForm;

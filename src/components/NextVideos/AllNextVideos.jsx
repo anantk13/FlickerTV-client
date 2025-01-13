@@ -1,6 +1,6 @@
 import React from "react";
 import { useNextVideos } from "../../hooks/video.hook";
-import NextVideoCard from "./NextVideoCard";
+import {NextVideoCard} from "../index";
 import { Link } from "react-router-dom";
 import NextVideoCardSkeleton from "../Loading/NextVideoCardSkeleton";
 

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import SpButton from "../SpButton";
 import Logo from "../Logo";
-import Button from "../button";
+import Button from "../Button";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useLogout } from "../../hooks/auth.hook";
 import { useDispatch, useSelector } from "react-redux";
