@@ -7,7 +7,7 @@ function Logo({ className, inline = false, mobile = false }) {
       className={`font-bold text-xl flex items-center justify-center w-full ${className} text-[#FFFFFF] `}
     >
       <img
-        src="/logo.png"
+        src="/logo.jpg"
         alt="logo"
         className="w-10 h-10 inline-block mr-2"
       />
@@ -17,7 +17,7 @@ function Logo({ className, inline = false, mobile = false }) {
           mobile && "hidden md:block"
         }`}
       >
-        <div className=" text-2xl">Streamify</div>
+        <div className=" text-2xl">FlickerTV</div>
       </div>
     </div>
   );
