@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink, Link, Outlet } from "react-router-dom";
-import defaultCoverImg from "../assets/default-cover-photo.jpg";
+import defaultCoverImg from "../assets/default-cover-photo.png";
 import { AvatarInput, CoverImageInput } from "../components";
 
 function EditProfile() {

@@ -8,7 +8,7 @@ import { SpButton } from "../components";
 import SubscribeButton from "../components/SubscribeButton";
 import { MyChannelSkeleton } from "../components/index.js";
 import { NavLink, Link } from "react-router-dom";
-import defaultCover from "../assets/default-cover-photo.jpg";
+import defaultCover from "../assets/default-cover-photo.png";
 
 function MyChannel() {
   const { username } = useParams();
