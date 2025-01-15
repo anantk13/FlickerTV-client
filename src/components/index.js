@@ -12,7 +12,7 @@ import VideoPlayer from "./VideoPlayer";
 import Like from "./VideoDetails/Like";
 import CommentBox from "./VideoDetails/CommentBox";
 import Comment from "./VideoDetails/Comment";
-import VideolistCard from "./Videocards/VideolistCard";
+import VideolistCard from "./VideoCards/VideolistCard";
 import VideoStats from "./VideoStats";
 import UploadVideo from "./UploadVideo/UploadVideo";
 import ProgressBar from "./ProgressBar";
