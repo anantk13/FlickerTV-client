@@ -39,9 +39,4 @@ FlickerTV is a full-stack video-sharing platform inspired by YouTube, where user
 
 ---
 
-## ⚙️ Installation & Setup
 
-1. **Clone the repo:**
-   ```bash
-   git clone https://github.com/anantk13/FlickerTV-client.git
-   cd FlickerTV-client
