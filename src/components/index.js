@@ -4,7 +4,7 @@ import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import SpButton from "./SpButton";
 import Button from "./Button";
-import Videocard from "./VideoCard";
+import Videocard from "./Videocard";
 import Input from "./Input";
 import LoginPopup from "./LoginPopup";
 

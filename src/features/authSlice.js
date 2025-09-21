@@ -16,10 +16,10 @@ const authSlice = createSlice({
         state.user = action.payload;
       }
     },
-    unSetUser: (state) => {
-        state.authStatus = false;
-        state.user = null;
-  }
+  //   unSetUser: (state) => {
+  //       state.authStatus = false;
+  //       state.user = null;
+  // }
  }
 });
 

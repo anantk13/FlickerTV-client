@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+  video: null,
+  videoForEdit: null,
+};
+
 const videoSlice = createSlice({
   name: "video",
   initialState: {
