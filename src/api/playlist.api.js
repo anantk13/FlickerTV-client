@@ -7,42 +7,87 @@ const API = axios.create({
   withCredentials: true,
 });
 
-export const toggleVideoLike = async (videoId) => {
+export const getUserPlaylists = async (userId) => {
   try {
-    const { data } = await API.post(`/like/toggle/v/${videoId}`);
+    const { data } = await API.get(`/playlist/user/${userId}`);
     return data?.data;
   } catch (error) {
-    toast.error(error?.response?.data?.error);
     throw error?.response?.data?.error;
   }
 };
 
-export const toggleCommentLike = async (commentId) => {
+export const getPlaylistById = async (playlistId) => {
+  console.log("this get playlist by id called", playlistId);
   try {
-    const { data } = await API.post(`/like/toggle/c/${commentId}`);
+    const { data } = await API.get(`/playlist/${playlistId}`);
+    console.log(data.data);
     return data?.data;
   } catch (error) {
-    toast.error(error?.response?.data?.error);
     throw error?.response?.data?.error;
   }
 };
 
-export const toggleTweetLike = async (tweetId) => {
+export const updatePlaylist = async (playlistId, playlistData) => {
+  // const { name, description } = req.body;
   try {
-    const { data } = await API.post(`/like/toggle/t/${tweetId}`);
+    const { data } = await API.patch(`/playlist/${playlistId}`, playlistData);
+    toast.success(data?.message);
     return data?.data;
   } catch (error) {
-    toast.error(error?.response?.data?.error);
     throw error?.response?.data?.error;
   }
 };
 
-export const getLikedVideos = async () => {
+export const deletePlaylist = async (playlistId) => {
   try {
-    const { data } = await API.get("/like/videos");
+    const { data } = await API.delete(`/playlist/${playlistId}`);
+    toast.success(data?.message);
     return data?.data;
   } catch (error) {
-    toast.error(error?.response?.data?.error);
+    throw error?.response?.data?.error;
+  }
+};
+
+export const createPlaylist = async (playlistData) => {
+  try {
+    const { data } = await API.post("/playlist", playlistData);
+    toast.success(data?.message);
+
+    return data?.data;
+  } catch (error) {
+    throw error?.response?.data?.error;
+  }
+};
+
+export const addVideoToPlaylist = async (videoId, playlistId) => {
+  try {
+    const { data } = await API.patch(`/playlist/add/${videoId}/${playlistId}`);
+    toast.success(data?.message);
+    return data?.data;
+  } catch (error) {
+    throw error?.response?.data?.error;
+  }
+};
+
+export const removeVideoFromPlaylist = async (videoId, playlistId) => {
+  try {
+    const { data } = await API.patch(
+      `/playlist/remove/${videoId}/${playlistId}`
+    );
+    toast.success(data?.message);
+    return data?.data;
+  } catch (error) {
+    throw error?.response?.data?.error;
+  }
+};
+
+export const checkVideoInPlaylist = async (videoId, playlistId) => {
+  try {
+    const { data } = await API.get(
+      `/playlist/check-video/${playlistId}/${videoId}`
+    );
+    return data?.data?.isPresent;
+  } catch (error) {
     throw error?.response?.data?.error;
   }
 };
